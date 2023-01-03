@@ -12,6 +12,7 @@ app.get('/api/articles/:name', async (req, res) => {
     if (article) {
         res.json(article);
     } else {
+        res.send('That article doesn\'t exist');
         res.sendStatus(404);
     }
 });

@@ -7,12 +7,13 @@ const ArticlePage = () => {
 
     const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
 
-    useEffect (() => {
-        setArticleInfo({ upvotes: 3, comments: [] });
-    });
-
     const { articleId } = useParams();
     const article = articles.find(article => article.name === articleId);
+
+    useEffect (() => {
+        setArticleInfo({ upvotes: Math.ceil(Math.random() * 10), comments: [] });
+    }, [articleId]);
+    // useEffect requires an array as the second argument. The useEffect hook will call the first argument (the callback function) whenever the variables within the array update. If not watching for any updated components, simply pass in an empty array to prevent an infinite loop of the callback function 
 
     if (!article) {
         return <NotFoundPage />

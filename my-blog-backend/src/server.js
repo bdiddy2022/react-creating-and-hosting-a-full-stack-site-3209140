@@ -12,7 +12,6 @@ app.get('/api/articles/:name', async (req, res) => {
     if (article) {
         res.json(article);
     } else {
-        res.send('That article doesn\'t exist');
         res.sendStatus(404);
     }
 });
@@ -39,6 +38,7 @@ app.post('/api/articles/:name/comments', async (req, res) => {
     await db.collection('articles').updateOne({ name }, {
         $push: { comments: { postedBy, text } },
     });
+    
     const article = await db.collection('articles').findOne({ name });
 
     if (article) {

@@ -1,0 +1,1 @@
+//const user = useUser ----- if used in other files, can access if a user and also which user is logged in

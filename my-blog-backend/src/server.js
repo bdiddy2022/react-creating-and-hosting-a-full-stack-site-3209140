@@ -2,7 +2,7 @@ import fs from 'fs';
 import admin from 'firebase-admin';
 import express from 'express';
 import { db, connectToDb } from './db.js';
-import { allowedNodeEnvironmentFlags } from 'process';
+
 
 const credentials = JSON.parse(
     fs.readFileSync('./credentials.json')
@@ -19,15 +19,16 @@ app.use(express.json());
 app.use(async (req, res, next) => {
     const { authtoken } = req.headers;
 
-    if(auth) {
+    if (authtoken) {
         try {
-    const user = await admin.auth().verifyIdToken(authtoken);
-    req.user = user;
+            req.user = await admin.auth().verifyIdToken(authtoken);
         } catch {
-            res.sendStatus(400);
+            return res.sendStatus(400);
         }
     }
-    
+
+    req.user = req.user || {};
+
     next();
 });
 //Above: Firebase admin - Load user info automatically from auth token

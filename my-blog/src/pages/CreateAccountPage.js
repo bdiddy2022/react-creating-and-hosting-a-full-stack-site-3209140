@@ -10,10 +10,10 @@ const CreateAccountPage = () => {
 
     const navigate = useNavigate();
     
-    const createAccount = async () => {
+    const createAccount = (async() => {
         try {
             if(password !== confirmPassword){
-                setError('Password must match Conform Password');
+                setError('Password must match Confirm Password');
                 return;
             }
             await createUserWithEmailAndPassword(getAuth(), email, password);
@@ -21,7 +21,7 @@ const CreateAccountPage = () => {
         } catch(e) {
             setError(e.message);
         }
-    }
+    });
     
     return (
         <>

@@ -10,7 +10,8 @@ import articles from './article-content';
 
 const ArticlePage = () => {
 
-    const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [] });
+    const [articleInfo, setArticleInfo] = useState({ upvotes: 0, comments: [], canUpvote: false });
+    const { canUpvote }= articleInfo;
     const { articleId } = useParams();
 
     const { user, isLoading } = useUser();
@@ -22,11 +23,14 @@ const ArticlePage = () => {
             const headers = token ? { authtoken : token } : {}
             const response = await axios.get(`/api/articles/${articleId}`, { headers });
             const newArticleInfo = response.data;
+            
             setArticleInfo(newArticleInfo);
-        }
-
+        }    
+        
+    if(isLoading){
         loadArticleInfo();
-    }, []);
+    }
+    }, [isLoading, user]);
     // useEffect requires an array as the second argument. The useEffect hook will call the first argument (the callback function) whenever the variables within the array update. If not watching for any updated components, simply pass in an empty array to prevent an infinite loop of the callback function 
     const article = articles.find(article => article.name === articleId);
     
@@ -36,6 +40,7 @@ const ArticlePage = () => {
         const response = await axios.put(`/api/articles/${articleId}/upvote`, null, { headers });
         const updatedArticle = response.data;
         setArticleInfo(updatedArticle);
+        
     }
 
     if (!article) {
@@ -47,7 +52,7 @@ const ArticlePage = () => {
             <h1>{article.title}</h1>
             <div className="upvotes-section">
                 {user
-                    ? <button onClick={addUpvote}>Upvote</button>
+                    ? <button onClick={addUpvote}>{ canUpvote ? 'Upvote' : 'Already Upvoted'}</button>
                     : <button>Log in to upvote</button>
                 }
                 <p>This article has {articleInfo.upvotes} upvote(s)</p>

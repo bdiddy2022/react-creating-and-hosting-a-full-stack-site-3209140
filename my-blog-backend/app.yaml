@@ -1,0 +1,6 @@
+includes: 
+  - prod-env.yaml
+runtime: nodejs16
+
+# this file informs google cloud of necessary environment variables for proper app function
+#   also, not a bad place to hide credentials like mongo db stuff (see prod-env)

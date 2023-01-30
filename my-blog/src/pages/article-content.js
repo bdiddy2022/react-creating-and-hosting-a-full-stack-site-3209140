@@ -24,7 +24,7 @@ const articles = [
             consequat quam. Vivamus accumsan dui in facilisis aliquet.`,
         ]
     },    {
-        name: 'learn-express',
+        name: 'learn-node',
         title: 'How to Build a Node Server in 10 Minutes',
         content: [
             `In this article, we're going to be talking looking at a very quick way

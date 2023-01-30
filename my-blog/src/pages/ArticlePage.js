@@ -20,7 +20,7 @@ const ArticlePage = () => {
     useEffect(() => {
         const loadArticleInfo = async () => {
             const token = user && await user.getIdToken();
-            const headers = token ? { authtoken : token } : {}
+            const headers = token ? { authtoken : token } : {};
             const response = await axios.get(`/api/articles/${articleId}`, { headers });
             const newArticleInfo = response.data;
             
@@ -30,7 +30,7 @@ const ArticlePage = () => {
     if(isLoading){
         loadArticleInfo();
     }
-    }, [isLoading, user]);
+}, [isLoading, user]);
     // useEffect requires an array as the second argument. The useEffect hook will call the first argument (the callback function) whenever the variables within the array update. If not watching for any updated components, simply pass in an empty array to prevent an infinite loop of the callback function 
     const article = articles.find(article => article.name === articleId);
     
